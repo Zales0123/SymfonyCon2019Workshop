@@ -1,0 +1,18 @@
+sylius_grid:
+    grids:
+        app_admin_subscription:
+            driver:
+                options:
+                    class: '%app.model.subscription.class%'
+            fields:
+                id:
+                    type: string
+                productName:
+                    type: string
+                customer:
+                    type: string
+                    path: customer.name
+                expirationTime:
+                    type: datetime
+                    options:
+                        format: d-m-Y H:i:s

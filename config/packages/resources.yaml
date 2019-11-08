@@ -1,0 +1,5 @@
+sylius_resource:
+    resources:
+        app.subscription:
+            classes:
+                model: App\Entity\Subscription
