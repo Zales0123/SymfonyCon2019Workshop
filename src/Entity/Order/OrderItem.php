@@ -13,4 +13,20 @@ use Sylius\Component\Core\Model\OrderItem as BaseOrderItem;
  */
 class OrderItem extends BaseOrderItem
 {
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $subscriptionPeriod;
+
+    public function getSubscriptionPeriod(): ?string
+    {
+        return $this->subscriptionPeriod;
+    }
+
+    public function setSubscriptionPeriod(?string $subscriptionPeriod): void
+    {
+        $this->subscriptionPeriod = $subscriptionPeriod;
+    }
 }
