@@ -1,5 +1,6 @@
 app:
     ui:
+        browse_your_current_subscriptions: "Browse your current subscriptions"
         expiration_time: "Expiration time"
         subscription_period: "Subscription period"
         subscription_periods:

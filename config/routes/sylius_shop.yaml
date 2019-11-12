@@ -12,3 +12,15 @@ sylius_shop_default_locale:
     methods: [GET]
     defaults:
         _controller: sylius.controller.shop.locale_switch:switchAction
+
+app_shop_account_subscription_index:
+    path: /{_locale}/account/subscriptions/
+    methods: [GET]
+    defaults:
+        _controller: app.controller.subscription:indexAction
+        _sylius:
+            section: shop_account
+            template: "Shop/Account/subscriptions.html.twig"
+            grid: app_account_subscription
+    requirements:
+        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$

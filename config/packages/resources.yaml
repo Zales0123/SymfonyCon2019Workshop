@@ -3,3 +3,4 @@ sylius_resource:
         app.subscription:
             classes:
                 model: App\Entity\Subscription
+                repository: App\Doctrine\ORM\SubscriptionRepository

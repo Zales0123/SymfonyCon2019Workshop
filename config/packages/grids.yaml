@@ -26,3 +26,27 @@ sylius_grid:
                         format: d-m-Y H:i:s
                     label: app.ui.expiration_time
                     sortable: ~
+        app_account_subscription:
+            driver:
+                options:
+                    class: '%app.model.subscription.class%'
+                    repository:
+                        method: createByCustomerQueryBuilder
+                        arguments:
+                            - "expr:service('sylius.context.customer').getCustomer().getId()"
+            sorting:
+                expirationTime: asc
+            fields:
+                id:
+                    type: string
+                    label: sylius.ui.id
+                productName:
+                    type: string
+                    label: sylius.ui.product
+                    sortable: ~
+                expirationTime:
+                    type: datetime
+                    options:
+                        format: d-m-Y H:i:s
+                    label: app.ui.expiration_time
+                    sortable: ~

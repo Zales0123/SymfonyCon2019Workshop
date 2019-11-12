@@ -6,14 +6,14 @@ namespace App\Menu;
 
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
-final class AdminMenuListener
+final class AccountMenuListener
 {
     public function addSubscriptionsSubmenu(MenuBuilderEvent $event): void
     {
-        $salesSubmenu = $event->getMenu()->getChild('sales');
+        $accountMenu = $event->getMenu();
 
-        $salesSubmenu
-            ->addChild('subscriptions', ['route' => 'app_admin_subscription_index'])
+        $accountMenu
+            ->addChild('subscriptions', ['route' => 'app_shop_account_subscription_index'])
             ->setLabel('app.ui.subscriptions')
             ->setLabelAttribute('icon', 'clock')
         ;
