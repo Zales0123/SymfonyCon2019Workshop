@@ -31,3 +31,7 @@ services:
     App\Menu\AdminMenuListener:
         tags:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addSubscriptionsSubmenu }
+
+    App\Creator\SubscriptionCreatorInterface:
+        class: App\Creator\SubscriptionCreator
+        public: true

@@ -1,0 +1,8 @@
+winzou_state_machine:
+    sylius_order_checkout:
+        callbacks:
+            after:
+                create_subscriptions:
+                    on: ['complete']
+                    do: ['@App\Creator\SubscriptionCreatorInterface', 'fromOrder']
+                    args: ['object']

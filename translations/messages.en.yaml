@@ -1,0 +1,4 @@
+app:
+    ui:
+        expiration_time: "Expiration time"
+        subscriptions: "Subscriptions"
