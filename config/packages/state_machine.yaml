@@ -6,3 +6,18 @@ winzou_state_machine:
                     on: ['complete']
                     do: ['@App\Creator\SubscriptionCreatorInterface', 'fromOrder']
                     args: ['object']
+    app_subscription:
+        class: "%app.model.subscription.class%"
+        graph: app_subscription
+        state_machine_class: "%sylius.state_machine.class%"
+        states:
+            - active
+            - expired
+            - cancelled
+        transitions:
+            expire:
+                from: [active]
+                to: expired
+            cancel:
+                from: [active]
+                to: cancelled

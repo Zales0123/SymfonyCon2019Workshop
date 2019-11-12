@@ -11,3 +11,14 @@ app_admin_subscription:
         grid: app_admin_subscription
     type: sylius.resource
     prefix: /admin
+
+app_admin_subcription_cancel:
+    path: /subscriptions/{id}/cancel
+    methods: [PUT]
+    defaults:
+        _controller: app.controller.subscription:applyStateMachineTransitionAction
+        _sylius:
+            state_machine:
+                graph: app_subscription
+                transition: cancel
+            redirect: referer

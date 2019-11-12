@@ -20,12 +20,31 @@ sylius_grid:
                     path: customer.email
                     label: sylius.ui.customer
                     sortable: ~
+                state:
+                    type: twig
+                    label: sylius.ui.state
+                    options:
+                        template: "Grid/Subscription/state.html.twig"
                 expirationTime:
                     type: datetime
                     options:
                         format: d-m-Y H:i:s
                     label: app.ui.expiration_time
                     sortable: ~
+            actions:
+                item:
+                    cancel:
+                        type: apply_transition
+                        label: sylius.ui.cancel
+                        icon: ban
+                        options:
+                            link:
+                                route: app_admin_subcription_cancel
+                                parameters:
+                                    id: resource.id
+                            class: red
+                            transition: cancel
+                            graph: app_subscription
         app_account_subscription:
             driver:
                 options:

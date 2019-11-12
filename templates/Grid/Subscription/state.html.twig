@@ -1,0 +1,10 @@
+{% set map = {
+    'active': { color: 'green', icon: 'checkmark' },
+    'expired': { color: 'yellow', icon: 'history' },
+    'cancelled': { color: 'red', icon: 'ban' }
+} %}
+
+<span class="ui {{ map[data].color }} label">
+    <i class="{{ map[data].icon }} icon"></i>
+    {{ ('app.ui.subscription_state.'~data)|trans }}
+</span>

@@ -14,6 +14,10 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  */
 class Subscription implements ResourceInterface
 {
+    public const STATE_ACTIVE = 'active';
+    public const STATE_EXPIRED = 'expired';
+    public const STATE_CANCELLED = 'cancelled';
+
     /**
      * @var int
      *
@@ -45,6 +49,13 @@ class Subscription implements ResourceInterface
      */
     private $expirationTime;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $state = self::STATE_ACTIVE;
+
     public function __construct(string $productName, CustomerInterface $customer, \DateTimeInterface $expirationTime)
     {
         $this->productName = $productName;
@@ -70,5 +81,15 @@ class Subscription implements ResourceInterface
     public function getExpirationTime(): \DateTimeInterface
     {
         return $this->expirationTime;
+    }
+
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 }

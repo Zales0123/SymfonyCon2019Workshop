@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Doctrine\ORM;
 
+use App\Entity\Subscription;
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Sylius\Component\Core\Model\OrderInterface;
 
 final class SubscriptionRepository extends EntityRepository
 {
@@ -14,7 +14,9 @@ final class SubscriptionRepository extends EntityRepository
     {
         return $this->createQueryBuilder('subscription')
             ->andWhere('subscription.customer = :customerId')
+            ->andWhere('subscription.state = :state')
             ->setParameter('customerId', $customerId)
+            ->setParameter('state', Subscription::STATE_ACTIVE)
         ;
     }
 }

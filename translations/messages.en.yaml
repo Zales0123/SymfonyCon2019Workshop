@@ -6,4 +6,8 @@ app:
         subscription_periods:
             month: "Month"
             year: "Year"
+        subscription_state:
+            active: "Active"
+            cancelled: "Cancelled"
+            expired: "Expired"
         subscriptions: "Subscriptions"
