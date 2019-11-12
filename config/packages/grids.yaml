@@ -4,18 +4,25 @@ sylius_grid:
             driver:
                 options:
                     class: '%app.model.subscription.class%'
+            sorting:
+                expirationTime: asc
             fields:
                 id:
                     type: string
+                    label: sylius.ui.id
+                    sortable: ~
                 productName:
                     type: string
                     label: sylius.ui.product
+                    sortable: ~
                 customer:
                     type: string
                     path: customer.email
                     label: sylius.ui.customer
+                    sortable: ~
                 expirationTime:
                     type: datetime
                     options:
                         format: d-m-Y H:i:s
                     label: app.ui.expiration_time
+                    sortable: ~

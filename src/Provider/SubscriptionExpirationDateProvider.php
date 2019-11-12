@@ -10,7 +10,7 @@ final class SubscriptionExpirationDateProvider implements SubscriptionExpiration
 {
     public function fromOrderItem(OrderItem $orderItem): \DateTimeInterface
     {
-        $selectedPeriod = $orderItem->getSubscriptionPeriod() ?? 'year';
+        $selectedPeriod = $orderItem->getSubscriptionPeriod();
 
         if ($selectedPeriod === 'month') {
             return new \DateTime('+1 month');

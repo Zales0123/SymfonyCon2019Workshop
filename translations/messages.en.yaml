@@ -1,4 +1,8 @@
 app:
     ui:
         expiration_time: "Expiration time"
+        subscription_period: "Subscription period"
+        subscription_periods:
+            month: "Month"
+            year: "Year"
         subscriptions: "Subscriptions"
