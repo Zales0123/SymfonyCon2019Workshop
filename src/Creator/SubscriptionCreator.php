@@ -36,9 +36,10 @@ final class SubscriptionCreator implements SubscriptionCreatorInterface
             }
 
             $subscription = new Subscription(
-                $item->getProductName(),
+                $item->getVariant(),
                 $order->getCustomer(),
-                $this->subscriptionExpirationDateProvider->fromOrderItem($item)
+                $this->subscriptionExpirationDateProvider->fromOrderItem($item),
+                $order->getId()
             );
 
             $this->subscriptionManager->persist($subscription);

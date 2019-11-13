@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Product\Product;
+use App\Entity\Product\ProductVariant;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -28,11 +30,12 @@ class Subscription implements ResourceInterface
     private $id;
 
     /**
-     * @var string
+     * @var ProductVariant
      *
-     * @ORM\Column(type="string", name="product_name")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product\ProductVariant")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    private $productName;
+    private $productVariant;
 
     /**
      * @var CustomerInterface
@@ -56,11 +59,23 @@ class Subscription implements ResourceInterface
      */
     private $state = self::STATE_ACTIVE;
 
-    public function __construct(string $productName, CustomerInterface $customer, \DateTimeInterface $expirationTime)
-    {
-        $this->productName = $productName;
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $originOrderId;
+
+    public function __construct(
+        ProductVariant $productVariant,
+        CustomerInterface $customer,
+        \DateTimeInterface $expirationTime,
+        int $originOrderId
+    ) {
+        $this->productVariant = $productVariant;
         $this->customer = $customer;
         $this->expirationTime = $expirationTime;
+        $this->originOrderId = $originOrderId;
     }
 
     public function getId(): int
@@ -68,9 +83,9 @@ class Subscription implements ResourceInterface
         return $this->id;
     }
 
-    public function getProductName(): string
+    public function getProductVariant(): ProductVariant
     {
-        return $this->productName;
+        return $this->productVariant;
     }
 
     public function getCustomer(): CustomerInterface
@@ -91,5 +106,10 @@ class Subscription implements ResourceInterface
     public function setState(string $state): void
     {
         $this->state = $state;
+    }
+
+    public function getOriginOrderId(): int
+    {
+        return $this->originOrderId;
     }
 }

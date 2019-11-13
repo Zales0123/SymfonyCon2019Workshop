@@ -11,9 +11,10 @@ sylius_grid:
                     type: string
                     label: sylius.ui.id
                     sortable: ~
-                productName:
+                product:
                     type: string
                     label: sylius.ui.product
+                    path: productVariant.product.name
                     sortable: ~
                 customer:
                     type: string
