@@ -39,3 +39,21 @@ services:
     App\Creator\SubscriptionCreatorInterface:
         class: App\Creator\SubscriptionCreator
         public: true
+
+    App\Creator\RenewalOrderCreator:
+        arguments:
+            - '@sylius.repository.order'
+            - '@sylius.manager.order'
+            - '@sylius.factory.order'
+            - '@sylius.factory.order_item'
+            - '@sylius.order_item_quantity_modifier'
+            - '@sm.factory'
+
+    App\Command\RenewSubscriptionsCommand:
+        arguments:
+            - '@app.repository.subscription'
+            - '@App\Renewer\SubscriptionRenewer'
+
+    App\Renewer\SubscriptionRenewer:
+        arguments:
+            - '@App\Creator\RenewalOrderCreator'
