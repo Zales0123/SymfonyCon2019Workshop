@@ -54,6 +54,13 @@ services:
             - '@app.repository.subscription'
             - '@App\Renewer\SubscriptionRenewer'
 
-    App\Renewer\SubscriptionRenewer:
+    App\Renewer\SubscriptionRenewerInterface:
+        class: App\Renewer\SubscriptionRenewer
         arguments:
             - '@App\Creator\RenewalOrderCreator'
+            - '@App\Prolonger\SubscriptionProlongerInterface'
+
+    App\Prolonger\SubscriptionProlongerInterface:
+        class: App\Prolonger\SubscriptionProlonger
+        arguments:
+            - '@app.manager.subscription'

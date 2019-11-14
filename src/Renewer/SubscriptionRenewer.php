@@ -6,15 +6,22 @@ namespace App\Renewer;
 
 use App\Creator\RenewalOrderCreatorInterface;
 use App\Entity\Subscription;
+use App\Prolonger\SubscriptionProlongerInterface;
 
 final class SubscriptionRenewer implements SubscriptionRenewerInterface
 {
     /** @var RenewalOrderCreatorInterface */
     private $renewalOrderCreator;
 
-    public function __construct(RenewalOrderCreatorInterface $renewalOrderCreator)
-    {
+    /** @var SubscriptionProlongerInterface */
+    private $subscriptionProlonger;
+
+    public function __construct(
+        RenewalOrderCreatorInterface $renewalOrderCreator,
+        SubscriptionProlongerInterface $subscriptionProlonger
+    ) {
         $this->renewalOrderCreator = $renewalOrderCreator;
+        $this->subscriptionProlonger = $subscriptionProlonger;
     }
 
     public function renew(Subscription $subscription): void
@@ -24,5 +31,6 @@ final class SubscriptionRenewer implements SubscriptionRenewerInterface
         }
 
         $this->renewalOrderCreator->fromSubscription($subscription);
+        $this->subscriptionProlonger->prolong($subscription);
     }
 }

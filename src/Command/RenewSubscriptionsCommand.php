@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Creator\RenewalOrderCreatorInterface;
 use App\Entity\Subscription;
 use App\Renewer\SubscriptionRenewerInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;

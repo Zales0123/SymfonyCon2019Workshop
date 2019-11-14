@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Creator;
 
+use App\Entity\Order\Order;
 use App\Entity\Order\OrderItem;
 use App\Entity\Subscription;
 use Doctrine\Common\Persistence\ObjectManager;
 use SM\Factory\FactoryInterface as StateMachineFactoryInterface;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
@@ -53,11 +53,11 @@ final class RenewalOrderCreator implements RenewalOrderCreatorInterface
 
     public function fromSubscription(Subscription $subscription): void
     {
-        /** @var OrderInterface $order */
+        /** @var Order $order */
         $order = $this->orderRepository->find($subscription->getOriginOrderId());
         Assert::notNull($order);
 
-        /** @var OrderInterface $renewalOrder */
+        /** @var Order $renewalOrder */
         $renewalOrder = $this->orderFactory->createNew();
         $renewalOrder->setChannel($order->getChannel());
         $renewalOrder->setLocaleCode($order->getLocaleCode());
@@ -65,6 +65,7 @@ final class RenewalOrderCreator implements RenewalOrderCreatorInterface
         $renewalOrder->setCurrencyCode($order->getCurrencyCode());
         $renewalOrder->setShippingAddress(clone $order->getShippingAddress());
         $renewalOrder->setBillingAddress(clone $order->getBillingAddress());
+        $renewalOrder->setSubscription($subscription);
 
         /** @var OrderItem $orderItem */
         foreach ($order->getItems() as $orderItem) {
@@ -84,7 +85,7 @@ final class RenewalOrderCreator implements RenewalOrderCreatorInterface
         $this->orderManager->flush();
     }
 
-    private function processOrder(OrderInterface $order): void
+    private function processOrder(Order $order): void
     {
         $orderCheckoutStateMachine = $this->stateMachineFactory->get($order, OrderCheckoutTransitions::GRAPH);
         $orderCheckoutStateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS);

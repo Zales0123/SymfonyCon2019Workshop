@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Entity\Product\Product;
 use App\Entity\Product\ProductVariant;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -55,6 +54,13 @@ class Subscription implements ResourceInterface
     /**
      * @var string
      *
+     * @ORM\Column(type="string", name="period")
+     */
+    private $period;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=false)
      */
     private $state = self::STATE_ACTIVE;
@@ -70,11 +76,13 @@ class Subscription implements ResourceInterface
         ProductVariant $productVariant,
         CustomerInterface $customer,
         \DateTimeInterface $expirationTime,
+        string $period,
         int $originOrderId
     ) {
         $this->productVariant = $productVariant;
         $this->customer = $customer;
         $this->expirationTime = $expirationTime;
+        $this->period = $period;
         $this->originOrderId = $originOrderId;
     }
 
@@ -98,6 +106,11 @@ class Subscription implements ResourceInterface
         return $this->expirationTime;
     }
 
+    public function setExpirationTime(\DateTimeInterface $expirationTime): void
+    {
+        $this->expirationTime = $expirationTime;
+    }
+
     public function getState(): string
     {
         return $this->state;
@@ -106,6 +119,11 @@ class Subscription implements ResourceInterface
     public function setState(string $state): void
     {
         $this->state = $state;
+    }
+
+    public function getPeriod(): string
+    {
+        return $this->period;
     }
 
     public function getOriginOrderId(): int

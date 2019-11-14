@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Creator;
 
-use Sylius\Component\Core\Model\OrderInterface;
+use App\Entity\Order\Order;
 
 interface SubscriptionCreatorInterface
 {
-    public function fromOrder(OrderInterface $order): void;
+    public function fromOrder(Order $order): void;
 }
