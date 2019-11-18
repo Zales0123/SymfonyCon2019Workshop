@@ -1,0 +1,5 @@
+sylius_mailer:
+    emails:
+        subscription_prolonged:
+            subject: "Your subscription has just been prolonged!"
+            template: "Email/subscriptionProlonged.html.twig"

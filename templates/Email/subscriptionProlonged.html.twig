@@ -1,0 +1,10 @@
+{% block subject %}
+    Your subscription has just been prolonged!
+{% endblock %}
+
+{% block body %}
+    Hello {{ subscription.customer.fullName }}! Your subscription of {{ subscription.productVariant.product.name }} has just been prolonged.
+    Please, visit your account to pay for it.
+    <br/><br/>
+    Thanks!
+{% endblock %}
