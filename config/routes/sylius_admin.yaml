@@ -1,0 +1,25 @@
+sylius_admin:
+    resource: "@SyliusAdminBundle/Resources/config/routing.yml"
+    prefix: /admin
+
+app_admin_subscription:
+    resource: |
+        alias: app.subscription
+        templates: SyliusAdminBundle:Crud
+        section: admin
+        redirect: update
+        only: ['index', 'delete', 'update', 'create']
+        grid: app_admin_subscription
+    type: sylius.resource
+    prefix: /admin
+
+app_admin_subscription_cancel:
+    path: /admin/subscriptions/{id}/cancel
+    methods: [PUT]
+    defaults:
+        _controller: app.controller.subscription:applyStateMachineTransitionAction
+        _sylius:
+            state_machine:
+                graph: app_subscription
+                transition: cancel
+            section: admin

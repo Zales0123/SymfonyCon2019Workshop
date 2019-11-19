@@ -1,0 +1,56 @@
+sylius_grid:
+    grids:
+        app_admin_subscription:
+            driver:
+                options:
+                    class: '%app.model.subscription.class%'
+            sorting:
+                id: desc
+            fields:
+                id:
+                    type: string
+                    sortable: ~
+                expirationTime:
+                    label: app.ui.expiration_time
+                    type: datetime
+                    options:
+                        format: d-m-Y H:i:s
+                    sortable: ~
+                customer:
+                    label: sylius.ui.customer
+                    type: string
+                    path: customer.email
+                    sortable: customer.email
+                status:
+                    label: sylius.ui.status
+                    type: string
+                productVariant:
+                    label: app.ui.product_variant
+                    type: string
+                    path: productVariant.code
+            filters:
+                id:
+                    type: string
+                customer:
+                    type: entity
+                    form_options:
+                        class: '%sylius.model.customer.class%'
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    cancel:
+                        type: apply_transition
+                        label: app.ui.cancel
+                        options:
+                            transition: cancel
+                            graph: app_subscription
+                            link:
+                                route: app_admin_subscription_cancel
+                                parameters:
+                                    id: resource.id
+                    delete:
+                        type: delete

@@ -1,0 +1,61 @@
+{% extends '@SyliusShop/Checkout/layout.html.twig' %}
+
+{% form_theme form '@SyliusShop/Form/theme.html.twig' %}
+
+{% block content %}
+    <div class="ui three steps">
+            <i class="map icon"></i>
+            <div class="content">
+                <div class="title">{{ 'sylius.ui.address'|trans }}</div>
+                <div class="description">{{ 'sylius.ui.fill_in_your_billing_and_shipping_addresses'|trans }}</div>
+            </div>
+                <i class="truck icon"></i>
+                <div class="content">
+                    <div class="title">{{ 'sylius.ui.shipping'|trans }}</div>
+                    <div class="description">{{ 'sylius.ui.choose_how_your_goods_will_be_delivered'|trans }}</div>
+                </div>
+        <div class="final step" href="{{ path('sylius_shop_checkout_complete') }}">
+            <i class="checkered flag icon"></i>
+            <div class="content">
+                <div class="title">{{ 'sylius.ui.complete'|trans }}</div>
+                <div class="description">{{ 'sylius.ui.review_and_confirm_your_order'|trans }}</div>
+            </div>
+        </div>
+    </div>
+
+
+    {{ sonata_block_render_event('sylius.shop.checkout.select_payment.after_steps', {'order': order}) }}
+
+    <div class="ui stackable grid">
+        <div class="eleven wide column">
+            <div class="ui padded segment" id="sylius-payment-methods">
+                {{ sonata_block_render_event('sylius.shop.checkout.select_payment.before_form', {'order': order}) }}
+
+                {{ form_start(form, {'action': path('app_chekout_select_shipping_and_payment'), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+                {{ form_errors(form) }}
+                <input type="hidden" name="_method" value="PUT" />
+
+                {% include '@SyliusShop/Checkout/SelectShipping/_form.html.twig' %}
+                {% include '@SyliusShop/Checkout/SelectPayment/_form.html.twig' %}
+                <div class="ui hidden divider"></div>
+
+                {{ sonata_block_render_event('sylius.shop.checkout.select_payment.before_navigation', {'order': order}) }}
+                {% include '@SyliusShop/Checkout/SelectPayment/_navigation.html.twig' %}
+
+                {{ form_row(form._token) }}
+                {{ form_end(form, {'render_rest': false}) }}
+            </div>
+        </div>
+        <div class="five wide column">
+            {{ sonata_block_render_event('sylius.shop.checkout.select_payment.before_summary', {'order': order}) }}
+
+            {% include '@SyliusShop/Checkout/_summary.html.twig' with {'order': order} %}
+
+            {{ sonata_block_render_event('sylius.shop.checkout.select_payment.before_support', {'order': order}) }}
+
+            {% include '@SyliusShop/Checkout/_support.html.twig' %}
+
+            {{ sonata_block_render_event('sylius.shop.checkout.select_payment.after_support', {'order': order}) }}
+        </div>
+    </div>
+{% endblock %}

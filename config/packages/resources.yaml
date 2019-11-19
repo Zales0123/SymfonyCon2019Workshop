@@ -1,0 +1,6 @@
+sylius_resource:
+    resources:
+        app.subscription:
+            classes:
+                model: App\Entity\Subscription
+                form: App\Form\Type\SubscriptionType

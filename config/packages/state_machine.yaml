@@ -1,0 +1,32 @@
+# config/packages/state_machine.yaml
+
+winzou_state_machine:
+    app_subscription:
+        class: '%app.model.subscription.class%'
+        property_path: status
+        graph: app_subscription
+        states:
+             active: ~
+             cancelled: ~
+             expired: ~
+        transitions:
+            cancel:
+                from: [active]
+                to: cancelled
+            expire:
+                from: [active]
+                to: expired
+    sylius_order_checkout:
+        transitions:
+            renew:
+                from: [cart]
+                to: payment_selected
+            select_shipping_and_payment:
+                from: [addressed]
+                to: payment_selected
+        callbacks:
+            after:
+                create_subscriptions:
+                    on: ['complete']
+                    do: ['@App\Creator\SubscriptionCreator', 'createFromOrder']
+                    args: ['object']
